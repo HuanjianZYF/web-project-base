@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行  不知道为什么要加--> 
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+	<!-- 配置一个realm -->
+	<bean id="myRealm1" class="zyf.config.shiro.MyRealm1" />
+	
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    	<property name="realm" ref="myRealm1"/>
+	</bean>
+	
+	<!-- web.xml里的shiroFilter 自动找这个bean-->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+   	 	<property name="securityManager" ref="securityManager" />
+   	 	<property name="loginUrl" value="/api/login" />
+   	 	<property name="unauthorizedUrl" value="/api/unauthorized" />
+   	 	<property name="successUrl" value="/api/home" />
+    	<property name="filterChainDefinitions">
+        	<value>
+      
+        	</value>
+    	</property>
+	</bean>
+	
+	<!-- 启用shiro注解 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager"/>
+	</bean>
+</beans>

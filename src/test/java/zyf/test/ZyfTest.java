@@ -1,16 +1,19 @@
 package zyf.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import zyf.dao.PersonDao;
-import zyf.pojo.DO.PersonDO;
-import zyf.query.PersonQuery;
+import zyf.dao.RoleDao;
+import zyf.dao.UserDao;
+import zyf.pojo.DO.UserDO;
+import zyf.util.CommonUtil;
 
 /**
 * @Author 庄元丰
@@ -22,22 +25,30 @@ import zyf.query.PersonQuery;
 public class ZyfTest {
 	
 	@Resource
-	private PersonDao personDao;
+	private UserDao userDao;
+	
+	@Resource
+	private RoleDao roleDao;
 	
 	@Test
-	public void testPersonMapper() {
-		PersonDO zyf = new PersonDO();
-		zyf.setAge(23);
-		zyf.setName("zyf");
-		
-		PersonQuery query = new PersonQuery();
-		query.setAge(22);
-		query.setOffset(1);
-		query.setLimit(10);
-		
-		personDao.insertPerson(zyf);
-		System.out.println(personDao.getPersonById(2L));
-		System.out.println(personDao.getPersonByCondition(query));
+	public void testCommonUtil() {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("a", "b");
+		System.out.println(CommonUtil.isEmpty(map));
 	}
 	
+	@Test
+	public void testUserDao() {
+		UserDO zyf = new UserDO();
+		zyf.setUserName("zyf");
+		zyf.setPassword("11113");
+		zyf.setId(2L);
+		userDao.updateUserById(zyf);
+		System.out.println(userDao.getUserById(1L));
+	}
+	
+	@Test
+	public void testRoleDao() {
+		System.out.println(roleDao.getRoleByUserName("zyf"));
+	}
 }

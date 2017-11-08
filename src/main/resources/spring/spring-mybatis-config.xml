@@ -18,7 +18,7 @@
 	<!-- 把mybatis的SqlSessionFactory注入到容器中，并制定mybatis配置文件与mapper文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
-        <property name="mapperLocations" value="classpath:mybatis/mappers/*Mapper.xml"></property>  
+        <property name="mapperLocations" value="classpath:mybatis/mappers/*mapper.xml"></property>  
         <property name="configLocation" value="classpath:mybatis/config/mybatis-config.xml"></property>
     </bean>
     

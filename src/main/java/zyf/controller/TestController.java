@@ -1,7 +1,13 @@
 package zyf.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+
+import zyf.helper.ResultCodeEnum;
+import zyf.util.ResultUtil;
 
 /**
 * @Author 庄元丰
@@ -12,6 +18,13 @@ public class TestController {
 	
 	@RequestMapping("test")
 	public String test() {
-		return "test";
+		return JSON.toJSONString(ResultUtil.buildSuccessResult(ResultCodeEnum.UNKNOWN_ERROR));
 	}
+	
+	@RequiresRoles(value="admin")
+	@RequestMapping("test2")
+	public String test2() {
+		return "test2";
+	}
+	
 }

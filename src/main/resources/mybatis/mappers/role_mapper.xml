@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zyf.dao.RoleMapper">
+	<resultMap type="zyf.pojo.DO.RoleDO" id="RoleResultMap">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="fields">
+		id, user_name, role_name
+	</sql>
+	
+	<sql id="all_fields">
+		id, user_name, role_name, create_time, update_time, is_deleted
+	</sql>
+	
+	<sql id="fields_value">
+		null, #{userName}, #{roleName}
+	</sql>
+
+	<sql id="query_condition">
+		<where>
+			is_deleted = 0
+			<if test="userName != null">
+				and user_name like "%"#{userName}"%"
+			</if>
+			<if test="roleName != null">
+				and role_name like "%"#{roleName}"%"
+			</if>
+		</where>
+	</sql>
+
+ 	<insert id="insertRole" parameterType="RoleDO" useGeneratedKeys="true" keyProperty="id">
+ 	 	insert into role (<include refid="fields" />) 
+ 	 	values (<include refid="fields_value" />)
+	</insert>
+	
+	<update id="deleteRole" parameterType="long">
+		update role set is_deleted = 1 where id = #{id}
+	</update>
+		
+	<update id="updateRoleById" parameterType="RoleDO">
+		update role set user_name = #{userName}, role_name = #{roleName} where id = #{id} 
+	</update>
+	
+  	<select id="selectRoleById" parameterType="long" resultMap="RoleResultMap">
+    	select <include refid="fields" /> from role where is_deleted = 0 and id = #{id}
+ 	</select>
+
+ 	<select id="selectRoleByCondition" parameterType="map" resultMap="RoleResultMap">
+    	select <include refid="fields" /> from role <include refid="query_condition" />
+    	<if test="limit != null and offset != null">
+    		limit #{offset}, #{limit}
+    	</if>
+ 	</select>
+ 	
+ 	<select id="selectRoleByUserName" parameterType="string" resultMap="RoleResultMap">
+ 		select <include refid="fields" /> from role where user_name = #{userName} and is_deleted = 0 ;
+ 	</select>
+
+	<select id="countRoleByCondition" parameterType="map" resultType="int">
+		select count(*) from role <include refid="query_condition" />
+	</select>
+</mapper>
