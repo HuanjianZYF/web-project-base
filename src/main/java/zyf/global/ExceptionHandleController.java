@@ -1,5 +1,9 @@
 package zyf.global;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,10 +18,14 @@ public class ExceptionHandleController {
 	
 	@ResponseBody
 	@ExceptionHandler(Exception.class)
-	public String exceptionHandle(Exception e) {
+	public String exceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception{
 		if (e instanceof UnauthenticatedException) {
-			return "请登录";
+			request.getRequestDispatcher("/api/login").forward(request, response);
 		}
+		if (e instanceof AuthorizationException) {
+			return "您没有该操作的权限";
+		}
+		e.printStackTrace();
 		return "未知异常";
 	}
 }

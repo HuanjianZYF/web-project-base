@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zyf.dao.PermissionMapper">
+	<resultMap type="zyf.pojo.DO.PermissionDO" id="PermissionResultMap">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+		<result property="permission" column="permission" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="fields">
+		id, role_name, permission
+	</sql>
+	
+	<sql id="all_fields">
+		id, role_name, permission, create_time, update_time, is_deleted
+	</sql>
+	
+	<sql id="fields_value">
+		null, #{roleName}, #{permission}
+	</sql>
+
+	<sql id="query_condition">
+		<where>
+			is_deleted = 0
+			<if test="roleName != null">
+				and role_name like "%"#{roleName}"%"
+			</if>
+			<if test="permission != null">
+				and permission like "%"#{permission}"%"
+			</if>
+		</where>
+	</sql>
+
+ 	<insert id="insertPermission" parameterType="PermissionDO" useGeneratedKeys="true" keyProperty="id">
+ 	 	insert into permission (<include refid="fields" />) 
+ 	 	values (<include refid="fields_value" />)
+	</insert>
+	
+	<update id="deletePermission" parameterType="long">
+		update permission set is_deleted = 1 where id = #{id}
+	</update>
+		
+	<update id="updatePermissionById" parameterType="PermissionDO">
+		update  set role_name = #{roleName}, permission = #{permission} where id = #{id} 
+	</update>
+	
+  	<select id="selectPermissionById" parameterType="long" resultMap="PermissionResultMap">
+    	select <include refid="fields" /> from permission where is_deleted = 0 and id = #{id}
+ 	</select>
+
+ 	<select id="selectPermissionByCondition" parameterType="map" resultMap="PermissionResultMap">
+    	select <include refid="fields" /> from permission <include refid="query_condition" />
+    	<if test="limit != null and offset != null">
+    		limit #{offset}, #{limit}
+    	</if>
+ 	</select>
+ 	
+ 	<select id="selectPermissionByRoleName" parameterType="string" resultMap="PermissionResultMap">
+ 		select <include refid="fields" /> from permission where role_name = #{roleName} and is_deleted = 0 ;
+ 	</select>
+
+	<select id="countPermissionByCondition" parameterType="map" resultType="int">
+		select count(*) from permission <include refid="query_condition" />
+	</select>
+</mapper>

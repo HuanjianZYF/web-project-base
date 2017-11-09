@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import zyf.dao.RoleDao;
 import zyf.dao.UserDao;
 import zyf.pojo.DO.UserDO;
+import zyf.service.PermissionService;
 import zyf.util.CommonUtil;
 
 /**
@@ -29,6 +30,9 @@ public class ZyfTest {
 	
 	@Resource
 	private RoleDao roleDao;
+	
+	@Resource
+	private PermissionService permissionService;
 	
 	@Test
 	public void testCommonUtil() {
@@ -50,5 +54,10 @@ public class ZyfTest {
 	@Test
 	public void testRoleDao() {
 		System.out.println(roleDao.getRoleByUserName("zyf"));
+	}
+	
+	@Test
+	public void testPermissionService() {
+		System.out.println(permissionService.getByRoleName("admin"));
 	}
 }

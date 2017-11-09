@@ -46,6 +46,6 @@ public interface RoleDao {
 	/**
 	 * 根据用户名查询角色
 	 */
-	RoleDO getRoleByUserName(String userName);
+	List<RoleDO> getRoleByUserName(String userName);
 	
 }	

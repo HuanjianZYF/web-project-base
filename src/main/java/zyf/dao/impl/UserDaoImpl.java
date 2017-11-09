@@ -55,7 +55,8 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao{
 
 	@Override
 	public Integer countUserByCondition(UserQuery userQuery) {
-		return getSqlSession().selectOne(NAME_SPACE + "countUserByCondition", userQuery);
+		Integer count = getSqlSession().selectOne(NAME_SPACE + "countUserByCondition", userQuery);
+		return count == null ? 0 : count ; 
 	}
 
 	@Override

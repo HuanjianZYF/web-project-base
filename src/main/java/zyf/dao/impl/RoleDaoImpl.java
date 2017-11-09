@@ -30,43 +30,38 @@ public class RoleDaoImpl extends SqlSessionDaoSupport implements RoleDao{
 	
 	@Override
 	public int insertRole(RoleDO roleDO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getSqlSession().insert(NAME_SPACE + "insertRole", roleDO);
 	}
 
 	@Override
 	public int updateRoleById(RoleDO roleDO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getSqlSession().update(NAME_SPACE + "updateRoleById", roleDO);
 	}
 
 	@Override
 	public int deleteRoleById(Long id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return getSqlSession().update(NAME_SPACE + "deleteRole", id);
 	}
 
 	@Override
 	public RoleDO selectRoleById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectOne(NAME_SPACE + "selectRoleById", id);
 	}
 
 	@Override
 	public List<RoleDO> selectRoleByCondition(RoleQuery query) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectList(NAME_SPACE + "selectRoleByCondition", query);
 	}
 
 	@Override
 	public int countRoleByCondition(RoleQuery query) {
-		// TODO Auto-generated method stub
-		return 0;
+		Integer count = getSqlSession().selectOne(NAME_SPACE + "countRoleByCondition", query);
+		return count == null ? 0 : count;
 	}
 
 	@Override
-	public RoleDO getRoleByUserName(String userName) {
-		return getSqlSession().selectOne(NAME_SPACE + "selectRoleByUserName", userName);
+	public List<RoleDO> getRoleByUserName(String userName) {
+		return getSqlSession().selectList(NAME_SPACE + "selectRoleByUserName", userName);
 	}
 	
 }

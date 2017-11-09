@@ -13,21 +13,27 @@
 	<!-- 配置一个realm -->
 	<bean id="myRealm1" class="zyf.config.shiro.MyRealm1" />
 	
+	<!-- 配置一个RolePermissionResolver -->
+	<bean id="myRolePermissionResolver" class="zyf.config.shiro.MyRolePermissionResolver" />
+	
+	<!-- 配置一个PermissionResolver -->
+	<bean id="myPermissionResolver" class="zyf.config.shiro.MyPermissionResolver"/>
+	
+	<!-- 配置一下authorizer -->
+	<bean id="myAuthorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
+		<property name="rolePermissionResolver" ref="myRolePermissionResolver"/>
+		<property name="permissionResolver" ref="myPermissionResolver"/>
+	</bean>
+	
+	<!-- 配置securityManager realms属性必须最后配置 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    	<property name="authorizer" ref="myAuthorizer"/>
     	<property name="realm" ref="myRealm1"/>
 	</bean>
 	
 	<!-- web.xml里的shiroFilter 自动找这个bean-->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
    	 	<property name="securityManager" ref="securityManager" />
-   	 	<property name="loginUrl" value="/api/login" />
-   	 	<property name="unauthorizedUrl" value="/api/unauthorized" />
-   	 	<property name="successUrl" value="/api/home" />
-    	<property name="filterChainDefinitions">
-        	<value>
-      
-        	</value>
-    	</property>
 	</bean>
 	
 	<!-- 启用shiro注解 -->

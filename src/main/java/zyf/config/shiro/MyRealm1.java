@@ -1,5 +1,7 @@
 package zyf.config.shiro;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -7,11 +9,15 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import zyf.dao.RoleDao;
 import zyf.dao.UserDao;
+import zyf.pojo.DO.RoleDO;
 import zyf.pojo.DO.UserDO;
+import zyf.util.CommonUtil;
 
 /**
 * @Author 庄元丰
@@ -22,9 +28,28 @@ public class MyRealm1 extends AuthorizingRealm{
 	@Resource
 	private UserDao userDao;
 	
+	@Resource
+	private RoleDao roleDao;
+	
+	/**
+	 * 权限验证
+	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		return null;
+		
+		//得到用户名
+		String userName = principals.getPrimaryPrincipal().toString();
+		
+		List<RoleDO> roleList = roleDao.getRoleByUserName(userName);
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		
+		if (CommonUtil.isNotEmpty(roleList)) {
+			for (RoleDO role : roleList) {
+				info.addRole(role.getRoleName());
+			}
+		}
+		
+		return info;
 	}
 
 	/**
