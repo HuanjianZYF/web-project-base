@@ -6,6 +6,7 @@ import org.apache.shiro.authz.Permission;
 /**
 * @Author 庄元丰
 * @CreateTime 2017年11月9日下午6:37:20
+* Permission实体类，每一个权限都是一个shiro提供的Permission接口的实现类
 */
 public class MyPermission implements Permission{
 

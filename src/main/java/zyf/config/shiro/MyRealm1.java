@@ -13,10 +13,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import zyf.dao.RoleDao;
-import zyf.dao.UserDao;
 import zyf.pojo.DO.RoleDO;
 import zyf.pojo.DO.UserDO;
+import zyf.service.RoleService;
+import zyf.service.UserService;
 import zyf.util.CommonUtil;
 
 /**
@@ -26,10 +26,10 @@ import zyf.util.CommonUtil;
 public class MyRealm1 extends AuthorizingRealm{
 
 	@Resource
-	private UserDao userDao;
+	private UserService userService;
 	
 	@Resource
-	private RoleDao roleDao;
+	private RoleService roleService;
 	
 	/**
 	 * 权限验证
@@ -40,7 +40,7 @@ public class MyRealm1 extends AuthorizingRealm{
 		//得到用户名
 		String userName = principals.getPrimaryPrincipal().toString();
 		
-		List<RoleDO> roleList = roleDao.getRoleByUserName(userName);
+		List<RoleDO> roleList = roleService.getByUserName(userName);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		
 		if (CommonUtil.isNotEmpty(roleList)) {
@@ -58,7 +58,7 @@ public class MyRealm1 extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String username = (String)token.getPrincipal();  //得到用户名  
-		UserDO userDO = userDao.getByUserName(username);
+		UserDO userDO = userService.getByUserName(username);
 		if (userDO == null) {
 			throw new RuntimeException("用户不存在");
 		}

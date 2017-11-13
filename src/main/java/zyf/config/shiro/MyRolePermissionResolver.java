@@ -16,6 +16,7 @@ import zyf.util.CommonUtil;
 /**
 * @Author 庄元丰
 * @CreateTime 2017年11月9日下午5:04:51
+* 通过roleString来解析permission的地方，实现RolePermissionResolver并配置到securityManager中
 */
 public class MyRolePermissionResolver implements RolePermissionResolver{
 
