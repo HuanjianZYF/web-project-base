@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
+import org.apache.shiro.authz.permission.WildcardPermission;
 
 import zyf.pojo.DO.PermissionDO;
 import zyf.service.PermissionService;
@@ -30,7 +31,7 @@ public class MyRolePermissionResolver implements RolePermissionResolver{
 		List<PermissionDO> permissionList = permissionService.getByRoleName(roleString);
 		if (CommonUtil.isNotEmpty(permissionList)) {
 			for (PermissionDO permission : permissionList) {
-				resultPermissionList.add(new MyPermission(permission.getPermission()));
+				resultPermissionList.add(new WildcardPermission(permission.getPermission()));
 			}
 		}
 		

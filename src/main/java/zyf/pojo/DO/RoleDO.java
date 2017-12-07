@@ -14,21 +14,21 @@ public class RoleDO extends BaseDO{
 	private static final long serialVersionUID = 7886195384765443296L;
 	
 	/**
-	 * 用户名
+	 * 手机号
 	 */
-	private String userName;
+	private String phone;
 	
 	/**
 	 * 角色名
 	 */
 	private String roleName;
 
-	public String getUserName() {
-		return userName;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getRoleName() {
@@ -41,7 +41,7 @@ public class RoleDO extends BaseDO{
 
 	@Override
 	public String toString() {
-		return "RoleDO [userName=" + userName + ", roleName=" + roleName + "]";
+		return "RoleDO [phone=" + phone + ", roleName=" + roleName + "]";
 	}
-	
+
 }

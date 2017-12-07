@@ -38,9 +38,9 @@ public class MyRealm1 extends AuthorizingRealm{
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		
 		//得到用户名
-		String userName = principals.getPrimaryPrincipal().toString();
+		String phone = principals.getPrimaryPrincipal().toString();
 		
-		List<RoleDO> roleList = roleService.getByUserName(userName);
+		List<RoleDO> roleList = roleService.getByPhone(phone);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		
 		if (CommonUtil.isNotEmpty(roleList)) {
@@ -57,15 +57,15 @@ public class MyRealm1 extends AuthorizingRealm{
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		String username = (String)token.getPrincipal();  //得到用户名  
-		UserDO userDO = userService.getByUserName(username);
+		String phone = (String)token.getPrincipal();  //得到用户名  
+		UserDO userDO = userService.getByPhone(phone);
 		if (userDO == null) {
 			throw new RuntimeException("用户不存在");
 		}
 		String password = userDO.getPassword();
 		        
         //如果身份认证验证成功，返回一个AuthenticationInfo实现；  
-        return new SimpleAuthenticationInfo(username, password, getName());
+        return new SimpleAuthenticationInfo(phone, password, getName());
 	}
 	
 }

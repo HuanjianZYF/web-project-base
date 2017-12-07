@@ -1,31 +1,32 @@
-drop table if exists users;
-drop table if exists user_roles;
-drop table if exists roles_permissions;
+drop table if exists user;
+drop table if exists role;
+drop table if exists permission;
 
-create table users (
+create table user (
     id int auto_increment comment '主键id',
     create_time timestamp default current_timestamp comment "创建时间",
     update_time timestamp default current_timestamp on update current_timestamp comment "修改时间",
     is_deleted tinyint default 0 comment '是否逻辑删除，0表示未删除，1表示已删除',
-    user_name varchar(100) not null comment '用户名',
-    password varchar(100) not null comment '密码',
-    password_salt varchar(100) comment '加密盐',
+    phone varchar(11) not null comment '手机号',
+    password varchar(20) comment '密码',
+    nick_name varchar(30) not null comment '昵称',
+    avatar_url varchar(100) not null comment '头像',   
     primary key(id),
-    index idx_username(username)
+    index idx_phone(phone)
 ) charset=utf8 ENGINE=InnoDB;
 
-create table user_roles(
+create table role(
 	id int auto_increment comment '主键id',
     create_time timestamp default current_timestamp comment "创建时间",
     update_time timestamp default current_timestamp on update current_timestamp comment "修改时间",
     is_deleted tinyint default 0 comment '是否逻辑删除，0表示未删除，1表示已删除',
-	user_name varchar(100) not null comment '用户名',
+	phone varchar(11) not null comment '手机号',
 	role_name varchar(100) not null comment '角色名',
 	primary key(id),
-	unique index unidx_user_roles(username, role_name)
+	index idx_phone(phone)
 ) charset=utf8 ENGINE=InnoDB;
 
-create table roles_permissions(
+create table permission(
   id int auto_increment comment '主键id',
   create_time timestamp default current_timestamp comment "创建时间",
   update_time timestamp default current_timestamp on update current_timestamp comment "修改时间",
@@ -33,5 +34,5 @@ create table roles_permissions(
   role_name varchar(100) not null comment '角色名',
   permission varchar(100) not null comment '权限名',
   primary key(id),
-  unique index unidx_roles_permissions(role_name, permission)
+  index idx_role_name(role_name)
 ) charset=utf8 ENGINE=InnoDB;

@@ -2,7 +2,6 @@ package zyf.test;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,16 +11,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import zyf.dao.RoleDao;
 import zyf.dao.UserDao;
 import zyf.pojo.DO.UserDO;
-import zyf.query.UserQuery;
 import zyf.service.PermissionService;
+import zyf.service.RoleService;
+import zyf.service.UserService;
+import zyf.util.BeanProxyUtil;
 import zyf.util.CommonUtil;
 import zyf.util.DateUtil;
-import zyf.util.ExcelUtil;
+import zyf.util.PropertyUtil;
 import zyf.util.StringUtil;
-import zyf.util.UuidUtil;
 
 /**
 * @Author 庄元丰
@@ -33,10 +32,10 @@ import zyf.util.UuidUtil;
 public class ZyfTest {
 	
 	@Resource
-	private UserDao userDao;
+	private UserService userService;
 	
 	@Resource
-	private RoleDao roleDao;
+	private RoleService roleService;
 	
 	@Resource
 	private PermissionService permissionService;
@@ -47,22 +46,7 @@ public class ZyfTest {
 		map.put("a", "b");
 		System.out.println(CommonUtil.isEmpty(map));
 	}
-	
-	@Test
-	public void testUserDao() {
-		UserDO zyf = new UserDO();
-		zyf.setUserName("zyf");
-		zyf.setPassword("11113");
-		zyf.setId(2L);
-		userDao.updateUserById(zyf);
-		System.out.println(userDao.getUserById(1L));
-	}
-	
-	@Test
-	public void testRoleDao() {
-		System.out.println(roleDao.getRoleByUserName("zyf"));
-	}
-	
+
 	@Test
 	public void testPermissionService() {
 		System.out.println(permissionService.getByRoleName("admin"));
@@ -133,16 +117,8 @@ public class ZyfTest {
 	}
 	
 	@Test
-	public void testUuidUtil() {
-		System.out.println(UuidUtil.genernateUuid());
-	}
-	
-	@Test
-	public void testExcel() throws Exception{
-		UserQuery query = new UserQuery();
-		List<UserDO> list = userDao.getUserByCondition(query);
-		System.out.println(list);
-		
-		ExcelUtil.expExcel(list, "D://a.xlsx");
+	public void testSixNum() {
+		UserDao dao = BeanProxyUtil.getBean(UserDao.class);
+		System.out.println(dao.getByPhone("15858580733"));		
 	}
 }

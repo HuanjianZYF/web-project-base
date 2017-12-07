@@ -18,8 +18,9 @@ public enum ResultCodeEnum {
 	/**
 	 * 系统相关
 	 */
-	UNKNOWN_ERROR("0001", "未知错误")
-	
+	UNKNOWN_ERROR("0001", "未知错误"),
+	INVALID_TOKRN("0002", "无效token"),
+	EXPIRE_TOKRN("0003", "token过期"),
 	;
 	/**
 	 * 结果码

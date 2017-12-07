@@ -18,7 +18,7 @@ public class LoginController {
 	public String login() {
 		Subject currentUser = SecurityUtils.getSubject();
 		
-	    UsernamePasswordToken token = new UsernamePasswordToken("zyf", "123456");  
+	    UsernamePasswordToken token = new UsernamePasswordToken("15858580733", "123456");  
 	    try {  
 	        currentUser.login(token);  
 	    } catch (AuthenticationException e) {  

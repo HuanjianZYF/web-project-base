@@ -17,12 +17,12 @@
 	<bean id="myRolePermissionResolver" class="zyf.config.shiro.MyRolePermissionResolver" />
 	
 	<!-- 配置一个PermissionResolver -->
-	<bean id="myPermissionResolver" class="zyf.config.shiro.MyPermissionResolver"/>
+	<bean id="wildcardPermissionResolver" class="org.apache.shiro.authz.permission.WildcardPermissionResolver"/>
 	
 	<!-- 配置一下authorizer -->
 	<bean id="myAuthorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
 		<property name="rolePermissionResolver" ref="myRolePermissionResolver"/>
-		<property name="permissionResolver" ref="myPermissionResolver"/>
+		<property name="permissionResolver" ref="wildcardPermissionResolver"/>
 	</bean>
 	
 	<!-- 配置securityManager realms属性必须最后配置 -->

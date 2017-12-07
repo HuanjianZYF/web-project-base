@@ -12,6 +12,9 @@ public class HelloWorld {
 	public static void main(String[] args) {
 		Logger logger = LoggerFactory.getLogger(HelloWorld.class);
 		logger.info("hello,world!");
-		System.out.println("--");
+		logger.debug("wss");
+		logger.error("122");
+		logger.trace("222");
+
 	}
 }

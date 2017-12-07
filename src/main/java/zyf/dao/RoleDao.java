@@ -2,8 +2,6 @@ package zyf.dao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import zyf.pojo.DO.RoleDO;
 import zyf.query.RoleQuery;
 
@@ -46,6 +44,6 @@ public interface RoleDao {
 	/**
 	 * 根据用户名查询角色
 	 */
-	List<RoleDO> getRoleByUserName(String userName);
+	List<RoleDO> getRoleByPhone(String phone);
 	
 }	

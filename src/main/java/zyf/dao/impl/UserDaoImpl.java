@@ -60,9 +60,8 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao{
 	}
 
 	@Override
-	public UserDO getByUserName(String userName) {		
-		return getSqlSession().selectOne(NAME_SPACE + "selectUserByUserName", userName);
+	public UserDO getByPhone(String phone) {
+		return getSqlSession().selectOne(NAME_SPACE + "getByPhone", phone);
 	}
-	
 	
 }

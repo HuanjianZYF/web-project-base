@@ -21,8 +21,8 @@ public class RoleServiceImpl implements RoleService{
 	private RoleDao roleDao;
 	
 	@Override
-	public List<RoleDO> getByUserName(String userName) {
-		return roleDao.getRoleByUserName(userName);
+	public List<RoleDO> getByPhone(String phone) {
+		return roleDao.getRoleByPhone(phone);
 	}
 	
 }

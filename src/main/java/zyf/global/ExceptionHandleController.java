@@ -1,10 +1,15 @@
 package zyf.global;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthenticatedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ExceptionHandleController {
 	
+	private static Logger LOGGER = LoggerFactory.getLogger(ExceptionHandleController.class);
+	
 	@ResponseBody
 	@ExceptionHandler(Exception.class)
 	public String exceptionHandle(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception{
@@ -25,7 +32,14 @@ public class ExceptionHandleController {
 		if (e instanceof AuthorizationException) {
 			return "您没有该操作的权限";
 		}
-		e.printStackTrace();
+		
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		e.printStackTrace(pw);
+		pw.flush();
+		LOGGER.error(sw.toString());
+		pw.close();
+		sw.close();
 		return "未知异常";
 	}
 }

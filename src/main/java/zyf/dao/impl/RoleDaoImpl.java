@@ -60,8 +60,8 @@ public class RoleDaoImpl extends SqlSessionDaoSupport implements RoleDao{
 	}
 
 	@Override
-	public List<RoleDO> getRoleByUserName(String userName) {
-		return getSqlSession().selectList(NAME_SPACE + "selectRoleByUserName", userName);
+	public List<RoleDO> getRoleByPhone(String phone) {
+		return getSqlSession().selectList(NAME_SPACE + "getRoleByPhone", phone);
 	}
 	
 }

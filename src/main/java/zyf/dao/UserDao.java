@@ -41,7 +41,7 @@ public interface UserDao {
 	Integer countUserByCondition(UserQuery userQuery);
 	
 	/**
-	 * 根据用户名查找
+	 * 根据手机号查询
 	 */
-	UserDO getByUserName(String userName);
+	UserDO getByPhone(String phone);
 }

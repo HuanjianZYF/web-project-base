@@ -6,21 +6,21 @@ package zyf.query;
 public class UserQuery extends BaseQuery{
 	
 	/**
-	 * 用户名
+	 * 手机号
 	 */
-	private String userName;
+	private String phone;
 
-	public String getUserName() {
-		return userName;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Override
 	public String toString() {
-		return "UserQuery [userName=" + userName + "]";
+		return "UserQuery [phone=" + phone + "]";
 	}
 	
 }

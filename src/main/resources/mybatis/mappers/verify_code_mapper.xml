@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zyf.dao.VerifyCodeMapper">
+	<resultMap type="zyf.pojo.DO.VerifyCodeDO" id="VerifyCodeResultMap">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="phone" column="phone" jdbcType="VARCHAR"/>
+		<result property="code" column="code" jdbcType="VARCHAR"/>
+		<result property="sendTime" column="send_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<sql id="fields">
+		id, phone, code, send_time
+	</sql>
+	
+	<sql id="all_fields">
+		id, phone, code, send_time, create_time, update_time, is_deleted
+	</sql>
+	
+	<sql id="fields_value">
+		null, #{phone}, #{code}, #{sendTime}
+	</sql>
+
+	<sql id="query_condition">
+		<where>
+			is_deleted = 0
+			<if test="phone != null">
+				and phone = #{phone}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="update_condition">
+		<set>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="sendTime != null">
+				send_time = #{sendTime},
+			</if>
+		</set>
+	</sql>
+
+ 	<insert id="insertVerifyCode" parameterType="VerifyCodeDO" useGeneratedKeys="true" keyProperty="id">
+ 	 	insert into verify_code (<include refid="fields" />) 
+ 	 	values (<include refid="fields_value" />)
+	</insert>
+	
+	<update id="deleteVerifyCode" parameterType="string">
+		delete from verify_code  where phone = #{phone}
+	</update>
+		
+	<update id="updateVerifyCodeByPhone" parameterType="VerifyCodeDO">
+		update verify_code <include refid="update_condition" /> where phone = #{phone} 
+	</update>
+	
+  	<select id="selectVerifyCodeByPhone" parameterType="string" resultMap="VerifyCodeResultMap">
+    	select <include refid="fields" /> from verify_code where is_deleted = 0 and phone = #{phone}
+ 	</select>
+
+ 	<select id="selectVerifyCodeByCondition" parameterType="map" resultMap="VerifyCodeResultMap">
+    	select <include refid="fields" /> from verify_code <include refid="query_condition" />
+    	<if test="limit != null and offset != null">
+    		limit #{offset}, #{limit}
+    	</if>
+ 	</select>
+
+	<select id="countVerifyCodeByCondition" parameterType="map" resultType="int">
+		select count(*) from verify_code <include refid="query_condition" />
+	</select>
+</mapper>

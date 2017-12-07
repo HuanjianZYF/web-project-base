@@ -1,10 +1,16 @@
 package zyf.controller;
 
+import javax.annotation.Resource;
+
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+
+import zyf.service.TestService;
 
 /**
 * @Author 庄元丰
@@ -12,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @RestController
 public class TestController {
+	
+	@Resource
+	private TestService testService;
 	
 	@RequestMapping("test")
 	@RequiresAuthentication
@@ -36,9 +45,14 @@ public class TestController {
 		return "test4";
 	}
 	
-	@RequiresPermissions("read")
+	@RequiresPermissions("a:b:c:d")
 	@RequestMapping("test5")
 	public String test5() {
 		return "test5";
+	}
+	
+	@RequestMapping("test6")
+	public String test6() {
+		return JSON.toJSONString(testService.f());
 	}
 }

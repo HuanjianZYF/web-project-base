@@ -5,29 +5,45 @@
 <mapper namespace="zyf.dao.UserMapper">
 	<resultMap type="zyf.pojo.DO.UserDO" id="UserResultMap">
 		<id property="id" column="id" jdbcType="INTEGER"/>
-		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="phone" column="phone" jdbcType="VARCHAR"/>
 		<result property="password" column="password" jdbcType="VARCHAR"/>
+		<result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+		<result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<sql id="fields">
-		id, user_name, password
+		id, phone, password, nick_name, avatar_url
 	</sql>
 	
 	<sql id="all_fields">
-		id, user_name, password, create_time, update_time, is_deleted
+		id, phone, password, nick_name, avatar_url, create_time, update_time, is_deleted
 	</sql>
 	
 	<sql id="fields_value">
-		null, #{userName}, #{password}
+		null, #{phone}, #{password}, #{nickName}, #{avatarUrl}
 	</sql>
 
 	<sql id="query_condition">
 		<where>
 			is_deleted = 0
-			<if test="userName != null">
-				and user_name like "%"#{userName}"%"
+			<if test="phone != null">
+				and phone = #{phone}
 			</if>
 		</where>
+	</sql>
+	
+	<sql id="update_condition">
+		<set>
+			<if test="nickName != null">
+				nick_name = #{nickName},
+			</if>
+			<if test="avatarUrl != null">
+				avatar_url = #{avatarUrl},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+		</set>
 	</sql>
 
  	<insert id="insertUser" parameterType="UserDO" useGeneratedKeys="true" keyProperty="id">
@@ -40,7 +56,7 @@
 	</update>
 		
 	<update id="updateUserById" parameterType="UserDO">
-		update user set user_name = #{userName}, password = #{password} where id = #{id} 
+		update user <include refid="update_condition"/> where id = #{id} 
 	</update>
 	
   	<select id="selectUserById" parameterType="long" resultMap="UserResultMap">
@@ -53,12 +69,12 @@
     		limit #{offset}, #{limit}
     	</if>
  	</select>
- 	
- 	<select id="selectUserByUserName" parameterType="string" resultMap="UserResultMap">
- 		select <include refid="fields" /> from user where user_name = #{userName} and is_deleted = 0 ;
- 	</select>
 
 	<select id="countUserByCondition" parameterType="map" resultType="int">
 		select count(*) from user <include refid="query_condition" />
+	</select>
+	
+	<select id="getByPhone" parameterType="string" resultMap="UserResultMap">
+		select <include refid="fields" /> from user where is_deleted = 0 and phone = #{phone} 
 	</select>
 </mapper>

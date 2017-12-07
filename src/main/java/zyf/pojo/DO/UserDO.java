@@ -14,21 +14,31 @@ public class UserDO extends BaseDO{
 	private static final long serialVersionUID = 2218111788937305328L;
 
 	/**
-	 * 用户名
+	 * 手机号
 	 */
-	private String userName;
+	private String phone;
 	
 	/**
 	 * 密码
 	 */
 	private String password;
 
-	public String getUserName() {
-		return userName;
+	/**
+	 * 昵称
+	 */
+	private String nickName;
+	
+	/**
+	 * 头像
+	 */
+	private String avatarUrl;
+
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getPassword() {
@@ -39,9 +49,26 @@ public class UserDO extends BaseDO{
 		this.password = password;
 	}
 
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDO [userName=" + userName + ", password=" + password + "]";
+		return "UserDO [phone=" + phone + ", password=" + password + ", nickName=" + nickName + ", avatarUrl="
+				+ avatarUrl + "]";
 	}
 	
 }

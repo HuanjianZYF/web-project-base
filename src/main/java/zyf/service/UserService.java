@@ -11,6 +11,6 @@ public interface UserService {
 	/**
 	 * 根据用户名查询用户
 	 */
-	UserDO getByUserName(String userName);
+	UserDO getByPhone(String phone);
 	
 }

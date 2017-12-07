@@ -20,7 +20,7 @@ public class ReflectionUtil {
 	 * 
 	 */
 	public static <T> Object doGetMethod(T t, String fieldName) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		fieldName = StringUtil.First2UpperCase(fieldName);
+		fieldName = StringUtil.first2UpperCase(fieldName);
 		Method method = t.getClass().getMethod("get" + fieldName);
 		Object o = method.invoke(t);
 		return o;

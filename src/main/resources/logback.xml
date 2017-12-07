@@ -1,0 +1,34 @@
+<configuration debug="false">
+	
+	<!-- 随时间自动转移日志 -->
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/today.log</file>
+		
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+		
+		<encoder>
+      		<pattern>%date{yyyy-MM-dd hh:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+   		</encoder>
+	</appender>
+	
+	<!-- 控制台 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    	<encoder>
+      		<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    	</encoder>
+ 	</appender>
+	
+	<!-- 配置自己的logger -->
+	<logger name="zyf.global.ExceptionHandleController" level="warn">
+		<appender-ref ref="rollingFile" />
+	</logger>
+	
+    <root level="debug">
+    	<appender-ref ref="STDOUT" />
+    </root>
+    
+</configuration>

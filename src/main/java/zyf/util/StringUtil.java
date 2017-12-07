@@ -229,7 +229,7 @@ public class StringUtil {
 	/**
 	 * 字符串首字母大写
 	 */
-	public static String First2UpperCase(String str) {
+	public static String first2UpperCase(String str) {
 		if (str == null) {
 			return null;
 		}

@@ -195,4 +195,33 @@ public class DateUtil {
 		
 		return calendar.getTime();
 	}
+	
+	/**
+	 * 得到一天的最开始那一毫秒
+	 */
+	public static Date getBeginTimeOfDay(Date date) {
+		Calendar beginTimeCal = Calendar.getInstance();
+		beginTimeCal.setTime(date);
+		beginTimeCal.set(Calendar.HOUR_OF_DAY, 0);
+		beginTimeCal.set(Calendar.MINUTE, 0);
+		beginTimeCal.set(Calendar.SECOND, 0);
+		beginTimeCal.set(Calendar.MILLISECOND, 0);
+		
+		return beginTimeCal.getTime();
+	}
+	
+	/**
+	 * 获取一天的最后一毫秒
+	 */
+	public static Date getEndTimeOfDay(Date date) throws Exception {
+		Calendar endTimeCal = Calendar.getInstance();
+		endTimeCal.setTime(date);
+		endTimeCal.set(Calendar.HOUR_OF_DAY, 23);
+		endTimeCal.set(Calendar.MINUTE, 59);
+		endTimeCal.set(Calendar.SECOND, 59);
+		endTimeCal.set(Calendar.MILLISECOND, 99);
+		
+		return endTimeCal.getTime();
+	}
+	
 }

@@ -13,6 +13,6 @@ public interface RoleService {
 	/**
 	 * 根据用户名查询角色
 	 */
-	List<RoleDO> getByUserName(String userName);
+	List<RoleDO> getByPhone(String phone);
 	
 }
