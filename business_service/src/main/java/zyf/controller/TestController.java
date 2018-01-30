@@ -42,7 +42,7 @@ public class TestController {
 	
 	@RequestMapping("test4")
 	public String test4() {
-		return "test4";
+		return "test44";
 	}
 	
 	@RequiresPermissions("a:b:c:d")

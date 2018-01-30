@@ -1,13 +1,22 @@
 package zyf.test;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,6 +26,7 @@ import common.util.PropertyUtil;
 import common.util.StringUtil;
 import zyf.dao.UserDao;
 import zyf.pojo.DO.UserDO;
+import zyf.redis.RedisService;
 import zyf.service.PermissionService;
 import zyf.service.RoleService;
 import zyf.service.UserService;
@@ -28,8 +38,8 @@ import zyf.util.BeanProxyUtil;
 * @CreateTime 2017年10月31日下午2:11:58
 */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/spring-context.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("classpath:spring/spring-context.xml")
 public class ZyfTest {
 	
 	@Resource
@@ -40,6 +50,9 @@ public class ZyfTest {
 	
 	@Resource
 	private PermissionService permissionService;
+
+	@Resource
+	private RedisService redisService;
 	
 	@Test
 	public void testCommonUtil() {
@@ -118,6 +131,7 @@ public class ZyfTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testSixNum() {
 		UserDao dao = BeanProxyUtil.getBean(UserDao.class);
 		System.out.println(dao.getByPhone("15858580733"));		
@@ -126,5 +140,51 @@ public class ZyfTest {
 	@Test
 	public void testMdule(){
 		System.out.println(PropertyUtil.getProperty("db.user"));
+	}
+
+	@Test
+	public void testRedis(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("a", "aa");
+		map.put("b", "bb");
+		map.put("c", "cc");
+		redisService.setKeyValue("zyf2", map);
+		System.out.print(redisService.getKey("zyf"));
+		System.out.println("*\n*\n*\n*\n*\n*\n" + redisService.getKey("name"));
+//		redisService.deleteKey("zyf");
+	}
+
+	@Test
+	public void testLong(){
+		Long a = new Long(2);
+		String b = a.toString();
+		System.out.println(b);
+	}
+
+	@Test
+	public void testCandler() {
+		Calendar startTime = Calendar.getInstance();
+		startTime = Calendar.getInstance();
+		startTime.set(Calendar.HOUR_OF_DAY, 0);
+		startTime.set(Calendar.MINUTE, 0);
+		startTime.set(Calendar.SECOND, 0);
+		startTime.set(Calendar.MILLISECOND, 0);
+		System.out.println(startTime.getTime());
+	}
+
+	@Test
+	public void testInteger(){
+		Date a = new Date();
+		System.out.println(a.getTime() - 1000 * 60 * 60 * 24 *2);
+	}
+
+	@Test
+	public void testFormat() {
+		double a = 1.2233344;
+
+		BigDecimal big = new BigDecimal(a);
+		double f1 = big.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+		System.out.println(f1);
 	}
 }

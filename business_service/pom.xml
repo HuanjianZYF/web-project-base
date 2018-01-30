@@ -9,6 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
 
     <artifactId>business_service</artifactId>
 
@@ -42,6 +43,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
@@ -116,6 +123,18 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -137,6 +156,26 @@
             <version>0.7.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-support -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-support</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>sdk-java</artifactId>
+            <version>20180104135026</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -147,10 +186,11 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.10</version>
                 <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
                     <contextPath>/</contextPath>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8081</port>
+                            <port>10086</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>

@@ -28,5 +28,5 @@
 		<!-- 引入子spring配置文件 -->
 		<import resource="classpath:spring/spring-mybatis-config.xml"/>
 		<import resource="classpath:spring/shiro-config.xml"/>
-		
+		<import resource="classpath:spring/spring-redis.xml"/>
 </beans>

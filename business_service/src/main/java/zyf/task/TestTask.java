@@ -15,8 +15,5 @@ public class TestTask {
     @Scheduled(cron = "0 * * * * ?")
     public void test(){
         System.out.println("zyf is the best");
-        for(int i = 0; i < 10; i++){
-            System.out.println(i);
-        }
     }
 }
